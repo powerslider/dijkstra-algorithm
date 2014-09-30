@@ -29,7 +29,7 @@ void insert(priority_queue* Q, int key) {
 	int i,p;
 	Q->count++;
 	Q->keys[Q->n] = key;
-	for (i = Q->n; (i > 1) && (Q->keys[p = i / 2] > Q->keys[i]); i = p) {
+	for (i = Q->count; (i > 1) && (Q->keys[p = i / 2] > Q->keys[i]); i = p) {
 		swap(Q, p, i);
 	}
 }

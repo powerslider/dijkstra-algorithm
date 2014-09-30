@@ -6,36 +6,32 @@
 
 #define MAX_Q_SIZE 50
 
-double* distances;
-
-int compare(graph* g, unsigned int i, unsigned int j) {
-    if(g->nodes[i].distance == g->nodes[j].distance) { return 0; }
-    if(g->nodes[i].distance > g->nodes[j].distance) { return 1; }
-    return -1;
+void relax(node* current_node, edge* current_edge, unsigned int min_key) {
+	if (current_node->distance > current_node->distance + current_edge->weight) {
+		current_node->distance = current_node->distance + current_edge->weight;
+		current_node->previous = min_key;
+	}
 }
 
 void dijkstra(graph* g, unsigned int source) {
-	unsigned int i, smallest, v, edge_count;
-	node *n, *d;
-	edge *e;
+	unsigned int i, min_key, e, edge_count;
+	node *min_node, *current_node;
+	edge *current_edge;
 	priority_queue *Q;
 
 	g->nodes[source].distance = 0;
 	Q = create_priority_queue(MAX_Q_SIZE);
-    for (i = 0; i < g->node_count; i++) {
-        insert(Q, i);
-    }
+	for (i = 0; i < g->node_count; i++) {
+            insert(Q, i);
+       }
 	while(!is_empty(Q)) {
-		smallest = poll(Q);
-		n = &g->nodes[smallest];
-		edge_count = n->edge_count;
-		for (v = 0; v < edge_count; v++) {	
-			e = &n->edges[v];	
-			d = &g->nodes[e->destination];
-			if (d->distance > n->distance + e->weight) {
-				d->distance = n->distance + e->weight;
-				d->previous = smallest;
-			}
+		min_key = poll(Q);
+		min_node = &g->nodes[min_key];
+		edge_count = min_node->edge_count;
+		for (e = 0; e < edge_count; e++) {	
+			current_edge = &min_node->edges[e];	
+			current_node = &g->nodes[current_edge->destination];
+			relax(current_node, current_edge, min_key);
 		}
 	}
 	destroy_priority_queue(Q);
