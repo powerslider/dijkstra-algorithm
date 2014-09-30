@@ -1,20 +1,10 @@
 #include "priorityqueue.h"
 
 
-int poll(priority_queue * Q) {
-	int i,c;
-	int t = Q->keys[1];
-	Q->keys[1] = Q->keys[Q->count--];
-	for (i = 1; (c = 2 * i) <= Q->count; i = c) {
-		if ((c + 1 <= Q->count) && (Q->keys[c + 1] < Q->keys[c])) {
-			c++;
-		}
-		if (Q->keys[i] <= Q->keys[c]) {
-			break;
-		}
-		swap(Q, c, i);
-	}
-	return t;
+void swap(priority_queue* Q, int i, int j) {
+	int temp = Q->keys[i];
+	Q->keys[i] = Q->keys[j];
+	Q->keys[j] = temp;
 }
 
 priority_queue create_priority_queue(int maxsize) {
@@ -28,16 +18,26 @@ priority_queue create_priority_queue(int maxsize) {
 void insert(priority_queue* Q, int key) {
 	int i,p;
 	Q->count++;
-	Q->keys[Q->n] = key;
+	Q->keys[Q->count] = key;
 	for (i = Q->count; (i > 1) && (Q->keys[p = i / 2] > Q->keys[i]); i = p) {
 		swap(Q, p, i);
 	}
 }
 
-void swap(priority_queue* Q, int i, int j) {
-	int temp = Q->keys[i];
-	Q->keys[i] = Q->keys[j];
-	Q->keys[j] = temp;
+int poll(priority_queue * Q) {
+	int i, c;
+	int t = Q->keys[1];
+	Q->keys[1] = Q->keys[Q->count--];
+	for (i = 1; (c = 2 * i) <= Q->count; i = c) {
+		if ((c + 1 <= Q->count) && (Q->keys[c + 1] < Q->keys[c])) {
+			c++;
+		}
+		if (Q->keys[i] <= Q->keys[c]) {
+			break;
+		}
+		swap(Q, c, i);
+	}
+	return t;
 }
 
 void is_empty(priority_queue* Q) {

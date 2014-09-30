@@ -10,15 +10,11 @@ typedef struct {
 } priority_queue;
 
 
-int poll(priority_queue * Q);
-
 priority_queue create_priority_queue(int n);
 
 void insert(priority_queue* Q, int key);
 
-void show(priority_queue* Q, int n);
-
-void swap(priority_queue* Q, int i, int j);
+int poll(priority_queue * Q);
 
 void is_empty(priority_queue* Q);
 
