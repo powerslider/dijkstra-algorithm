@@ -39,12 +39,14 @@ graph* dijkstra(graph* g, unsigned int source) {
     return g;
 }
 
-void get_shortest_path(unsigned int source, unsigned int target) {
-    graph* g;
+double get_shortest_path(graph* g, unsigned int source, unsigned int target) {
+    double path_distance = 0;
     node* current_node;
     g = dijkstra(g, source);
 
     for (current_node = g->nodes[target]; current_node != null; current_node = current_node->previous) {
-        printf("%c -> ", current_node->value);
+        path_distance += current_node->distance;
     }
+
+    return path_distance;
 }

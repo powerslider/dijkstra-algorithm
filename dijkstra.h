@@ -5,6 +5,6 @@
 
 graph* dijkstra(graph*, unsigned int);
 
-void get_shortest_path(unsigned int, unsigned int);
+double get_shortest_path(unsigned int, unsigned int);
 
 #endif
