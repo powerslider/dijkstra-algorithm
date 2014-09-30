@@ -3,14 +3,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-graph* create_graph() {
-    graph* g = malloc(sizeof(graph));
-    g->node_space = 0;
-    g->node_count = 0;
-    g->nodes = NULL;
-    return g;
-}
-
 void resize_graph(graph* g) {
     if (g->node_space == 0) { 
         g->node_space = 1; 
@@ -26,8 +18,17 @@ void resize_node_edges(node* n) {
     } else {
         n->edge_space *=2;
     }
-	n->edges = realloc(n->edges, sizeof(edge) * (n->edge_space));
+    n->edges = realloc(n->edges, sizeof(edge) * (n->edge_space));
 }
+
+graph* create_graph() {
+    graph* g = malloc(sizeof(graph));
+    g->node_space = 0;
+    g->node_count = 0;
+    g->nodes = NULL;
+    return g;
+}
+
 
 void add_node(graph* g, char* c) {
     unsigned int count;
@@ -44,7 +45,6 @@ void add_node(graph* g, char* c) {
 	n->edge_count = 0;
 	n->edge_space = 0;
 	n->distance = INFINITY;
-	n->heap_index = -1;	
 	n->previous = -1;
     
     g->node_count++;
