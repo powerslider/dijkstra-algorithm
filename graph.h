@@ -13,7 +13,7 @@ typedef struct {
     unsigned int edge_space;
     char* value;
     double distance;
-	int previous;
+	node* previous;
 } node; 
 
 typedef struct {

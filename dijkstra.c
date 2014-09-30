@@ -6,14 +6,14 @@
 
 #define MAX_Q_SIZE 50
 
-void relax(node* current_node, edge* current_edge, unsigned int min_key) {
+void relax(node* current_node, edge* current_edge, node* min_node) {
 	if (current_node->distance > current_node->distance + current_edge->weight) {
 		current_node->distance = current_node->distance + current_edge->weight;
-		current_node->previous = min_key;
+		current_node->previous = min_node;
 	}
 }
 
-void dijkstra(graph* g, unsigned int source) {
+graph* dijkstra(graph* g, unsigned int source) {
 	unsigned int i, min_key, e, edge_count;
 	node *min_node, *current_node;
 	edge *current_edge;
@@ -24,15 +24,27 @@ void dijkstra(graph* g, unsigned int source) {
 	for (i = 0; i < g->node_count; i++) {
             insert(Q, i);
        }
-	while(!is_empty(Q)) {
+	while (!is_empty(Q)) {
 		min_key = poll(Q);
 		min_node = &g->nodes[min_key];
 		edge_count = min_node->edge_count;
 		for (e = 0; e < edge_count; e++) {	
 			current_edge = &min_node->edges[e];	
 			current_node = &g->nodes[current_edge->destination];
-			relax(current_node, current_edge, min_key);
+			relax(current_node, current_edge, min_node);
 		}
 	}
 	destroy_priority_queue(Q);
+
+    return g;
+}
+
+void get_shortest_path(unsigned int source, unsigned int target) {
+    graph* g;
+    node* current_node;
+    g = dijkstra(g, source);
+
+    for (current_node = g->nodes[target]; current_node != null; current_node = current_node->previous) {
+        printf("%c -> ", current_node->value);
+    }
 }
