@@ -7,11 +7,11 @@ void swap(priority_queue* Q, int i, int j) {
 	Q->keys[j] = temp;
 }
 
-priority_queue create_priority_queue(int maxsize) {
-	priority_queue Q;
-	Q.maxsize = maxsize;
-	Q.keys = (int *) malloc((Q.maxsize + 1) * (sizeof(int *)));
-	Q.count = 0;
+priority_queue* create_priority_queue(int maxsize) {
+	priority_queue* Q;
+	Q->maxsize = maxsize;
+	Q->keys = (int *) malloc((Q->maxsize + 1) * (sizeof(int *)));
+	Q->count = 0;
 	return Q;
 }
 
@@ -40,8 +40,8 @@ int poll(priority_queue * Q) {
 	return t;
 }
 
-void is_empty(priority_queue* Q) {
-    return Q.count == 0;
+int is_empty(priority_queue* Q) {
+    return Q->count == 0;
 }
 
 void destroy_priority_queue(priority_queue* Q) {

@@ -6,15 +6,15 @@ typedef struct {
     unsigned int destination;
     double weight;
 } edge;
- 
+
 typedef struct {
     edge* edges;
     unsigned int edge_count;
     unsigned int edge_space;
     char* value;
     double distance;
-	node* previous;
-} node; 
+    struct node* previous;
+} node;
 
 typedef struct {
     node* nodes;

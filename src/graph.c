@@ -45,7 +45,7 @@ void add_node(graph* g, char* c) {
 	n->edge_count = 0;
 	n->edge_space = 0;
 	n->distance = INFINITY;
-	n->previous = -1;
+	n->previous = NULL;
     
     g->node_count++;
 } 
@@ -55,15 +55,15 @@ void add_edge(graph* g, unsigned int source, unsigned int destination, double we
 	edge *e;
 	node *n;
 	
-	n = &g->nodes[i];
-    if(n->edge_space == n->edge_count) {
+	n = &g->nodes[source];
+    if (n->edge_space == n->edge_count) {
         resize_node_edges(n);
     }
 	e = &n->edges[n->edge_count];
 	e->source = source;
 	e->destination = destination;
 	e->weight = weight;
-	g->nodes[i].edge_count++;
+	g->nodes[source].edge_count++;
 }
 
 
